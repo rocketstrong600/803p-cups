@@ -217,7 +217,8 @@ Installable "OptionCutter/Cutter"
   }
 // 80mm hdpi printers
 {
-  #define POINTS 226
+  #define POINTS 227
+  #define POINTS_ACT 204
   #define PIXELS 576
 
   // model num is used by filter to determine raster width. 58 -> 0x180, 80 -> 0x240.
@@ -225,11 +226,17 @@ Installable "OptionCutter/Cutter"
   MinSize $POINTS 56
   MaxSize $POINTS 9286
 
- *CustomMedia "X70MMY65MM/80mm x 65mm" $POINTS 182 14 0 14 0 "<</PageSize[$POINTS 182]>>setpagedevice" "<</PageSize[$POINTS 182]>>setpagedevice"
-  CustomMedia "X70MMY105MM/80mm x 105mm" $POINTS 298 14 0 14 0 "<</PageSize[$POINTS 298]>>setpagedevice" "<</PageSize[$POINTS 298]>>setpagedevice"
-  CustomMedia "X70MMY210MM/80mm x 210mm" $POINTS 595 14 0 14 0 "<</PageSize[$POINTS 595]>>setpagedevice" "<</PageSize[$POINTS 595]>>setpagedevice"
-  CustomMedia "X70MMY297MM/80mm x 297mm" $POINTS 842 14 0 14 0 "<</PageSize[$POINTS 842]>>setpagedevice" "<</PageSize[$POINTS 842]>>setpagedevice"
-  CustomMedia "X70MMY3276MM/80mm x 3276mm" $POINTS 9286 14 0 14 0 "<</PageSize[$POINTS 9286]>>setpagedevice" "<</PageSize[$POINTS 9286]>>setpagedevice"
+ *CustomMedia "X72MMY65MM/80mm x 65mm" $POINTS 182 11 0 11 0 "<</PageSize[$POINTS 182]>>setpagedevice" "<</PageSize[$POINTS 182]>>setpagedevice"
+  CustomMedia "X72MMY105MM/80mm x 105mm" $POINTS 298 11 0 11 0 "<</PageSize[$POINTS 298]>>setpagedevice" "<</PageSize[$POINTS 298]>>setpagedevice"
+  CustomMedia "X72MMY210MM/80mm x 210mm" $POINTS 595 11 0 11 0 "<</PageSize[$POINTS 595]>>setpagedevice" "<</PageSize[$POINTS 595]>>setpagedevice"
+  CustomMedia "X72MMY297MM/80mm x 297mm" $POINTS 842 11 0 11 0 "<</PageSize[$POINTS 842]>>setpagedevice" "<</PageSize[$POINTS 842]>>setpagedevice"
+  CustomMedia "X72MMY3276MM/80mm x 3276mm" $POINTS 9286 11 0 11 0 "<</PageSize[$POINTS 9286]>>setpagedevice" "<</PageSize[$POINTS 9286]>>setpagedevice"
+
+  CustomMedia "X72MMY65MM/72mm x 65mm" $POINTS_ACT 182 0 0 0 0 "<</PageSize[$POINTS_ACT 182]>>setpagedevice" "<</PageSize[$POINTS_ACT 182]>>setpagedevice"
+  CustomMedia "X72MMY105MM/72mm x 105mm" $POINTS_ACT 298 0 0 0 0 "<</PageSize[$POINTS_ACT 298]>>setpagedevice" "<</PageSize[$POINTS_ACT 298]>>setpagedevice"
+  CustomMedia "X72MMY210MM/72mm x 210mm" $POINTS_ACT  595 0 0 0 0 "<</PageSize[$POINTS_ACT  595]>>setpagedevice" "<</PageSize[$POINTS_ACT  595]>>setpagedevice"
+  CustomMedia "X72MMY297MM/72mm x 297mm" $POINTS_ACT  842 0 0 0 0 "<</PageSize[$POINTS_ACT  842]>>setpagedevice" "<</PageSize[$POINTS_ACT  842]>>setpagedevice"
+  CustomMedia "X72MMY3276MM/72mm x 3276mm" $POINTS_ACT  9286 0 0 0 0 "<</PageSize[$POINTS_ACT  9286]>>setpagedevice" "<</PageSize[$POINTS_ACT  9286]>>setpagedevice"
 
   // 803p
   {
