@@ -232,12 +232,6 @@ Installable "OptionCutter/Cutter"
   CustomMedia "X72MMY297MM/80mm x 297mm" $POINTS 842 11 0 11 0 "<</PageSize[$POINTS 842]>>setpagedevice" "<</PageSize[$POINTS 842]>>setpagedevice"
   CustomMedia "X72MMY3276MM/80mm x 3276mm" $POINTS 9286 11 0 11 0 "<</PageSize[$POINTS 9286]>>setpagedevice" "<</PageSize[$POINTS 9286]>>setpagedevice"
 
-  CustomMedia "X72MMY65MM/72mm x 65mm" $POINTS_ACT 182 0 0 0 0 "<</PageSize[$POINTS_ACT 182]>>setpagedevice" "<</PageSize[$POINTS_ACT 182]>>setpagedevice"
-  CustomMedia "X72MMY105MM/72mm x 105mm" $POINTS_ACT 298 0 0 0 0 "<</PageSize[$POINTS_ACT 298]>>setpagedevice" "<</PageSize[$POINTS_ACT 298]>>setpagedevice"
-  CustomMedia "X72MMY210MM/72mm x 210mm" $POINTS_ACT  595 0 0 0 0 "<</PageSize[$POINTS_ACT  595]>>setpagedevice" "<</PageSize[$POINTS_ACT  595]>>setpagedevice"
-  CustomMedia "X72MMY297MM/72mm x 297mm" $POINTS_ACT  842 0 0 0 0 "<</PageSize[$POINTS_ACT  842]>>setpagedevice" "<</PageSize[$POINTS_ACT  842]>>setpagedevice"
-  CustomMedia "X72MMY3276MM/72mm x 3276mm" $POINTS_ACT  9286 0 0 0 0 "<</PageSize[$POINTS_ACT  9286]>>setpagedevice" "<</PageSize[$POINTS_ACT  9286]>>setpagedevice"
-
   // 803p
   {
     Manufacturer "DP-Dapper"
