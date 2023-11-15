@@ -240,13 +240,13 @@ Installable "OptionCutter/Cutter"
 
   // 803p
   {
-    Manufacturer "China"
-    ModelName "803p"
-    PCFileName "803p.ppd"
-    Attribute "NickName" "" "803p POS"
+    Manufacturer "DP-Dapper"
+    ModelName "DP_Q803P"
+    PCFileName "Q803p.ppd"
+    Attribute "NickName" "" "Q803P POS"
     Attribute "ShortNickName" "" "POS"
-    Attribute "Product" "" "(8034)"
-    Attribute "1284DeviceID" "" "MFG:Manufacture;CMD:Manufacture;MDL:803P;CLS:PRINTER;"
+    Attribute "Product" "" "(Q803P)"
+    Attribute "1284DeviceID" "" "MFG:Dapper;CMD:Dapper;MDL:Q803P;CLS:PRINTER;"
   }
 
 }

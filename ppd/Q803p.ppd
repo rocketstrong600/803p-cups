@@ -1,16 +1,16 @@
 *PPD-Adobe: "4.3"
-*%%%% PPD file for 803p with CUPS.
+*%%%% PPD file for DP_Q803P with CUPS.
 *%%%% Created by the CUPS PPD Compiler CUPS v2.4.7.
 *FormatVersion: "4.3"
 *FileVersion: "1.2"
 *LanguageVersion: English
 *LanguageEncoding: ISOLatin1
-*PCFileName: "803p.ppd"
-*Product: "(8034)"
-*Manufacturer: "China"
-*ModelName: "China 803p"
+*PCFileName: "Q803p.ppd"
+*Product: "(Q803P)"
+*Manufacturer: "DP-Dapper"
+*ModelName: "DP-Dapper DP_Q803P"
 *ShortNickName: "POS"
-*NickName: "803p POS"
+*NickName: "Q803P POS"
 *PSVersion: "(3010.000) 550"
 *LanguageLevel: "3"
 *ColorDevice: False
@@ -21,7 +21,7 @@
 *TTRasterizer: Type42
 *% Driver-defined attributes...
 *VariablePaperSize: True
-*1284DeviceID: "MFG:Manufacture;CMD:Manufacture;MDL:803P;CLS:PRINTER;"
+*1284DeviceID: "MFG:Dapper;CMD:Dapper;MDL:Q803P;CLS:PRINTER;"
 *cupsVersion: 2.4
 *cupsModelNumber: 576
 *cupsManualCopies: True
@@ -249,4 +249,4 @@
 *CloseUI: *CashDrawer2PulseOff
 *CloseGroup: *CashDrawerTune
 *DefaultFont: Courier
-*% End of 803p.ppd, 12827 bytes.
+*% End of Q803p.ppd, 12838 bytes.
