@@ -2,7 +2,7 @@
 *%%%% PPD file for DP_Q803P with CUPS.
 *%%%% Created by the CUPS PPD Compiler CUPS v2.4.7.
 *FormatVersion: "4.3"
-*FileVersion: "1.2"
+*FileVersion: "1.3"
 *LanguageVersion: English
 *LanguageEncoding: ISOLatin1
 *PCFileName: "Q803p.ppd"
@@ -35,59 +35,27 @@
 *UIConstraints: *OptionCutter False *CutMedia
 *OpenUI *PageSize/Media Size: PickOne
 *OrderDependency: 10 AnySetup *PageSize
-*DefaultPageSize: X72MMY65MM
-*PageSize X70MMY65MM/80mm x 65mm: "<</PageSize[226 182]>>setpagedevice"
-*PageSize X70MMY105MM/80mm x 105mm: "<</PageSize[226 298]>>setpagedevice"
-*PageSize X70MMY210MM/80mm x 210mm: "<</PageSize[226 595]>>setpagedevice"
-*PageSize X70MMY297MM/80mm x 297mm: "<</PageSize[226 842]>>setpagedevice"
-*PageSize X70MMY3276MM/80mm x 3276mm: "<</PageSize[226 9286]>>setpagedevice"
-*PageSize X72MMY65MM/80mm x 65mm: "<</PageSize[227 182]>>setpagedevice"
-*PageSize X72MMY105MM/80mm x 105mm: "<</PageSize[227 298]>>setpagedevice"
-*PageSize X72MMY210MM/80mm x 210mm: "<</PageSize[227 595]>>setpagedevice"
-*PageSize X72MMY297MM/80mm x 297mm: "<</PageSize[227 842]>>setpagedevice"
-*PageSize X72MMY3276MM/80mm x 3276mm: "<</PageSize[227 9286]>>setpagedevice"
+*DefaultPageSize: RP80x200
+*PageSize RP80x200/Roll paper 80 x 200 mm: "<</PageSize[204.3 566.9]/ImagingBBox null>>setpagedevice"
+*PageSize RP80x2000/Roll paper 80 x 2000 mm: "<</PageSize[204.3 5669.3]/ImagingBBox null>>setpagedevice"
 *CloseUI: *PageSize
 *OpenUI *PageRegion/Media Size: PickOne
 *OrderDependency: 10 AnySetup *PageRegion
-*DefaultPageRegion: X72MMY65MM
-*PageRegion X70MMY65MM/80mm x 65mm: "<</PageSize[226 182]>>setpagedevice"
-*PageRegion X70MMY105MM/80mm x 105mm: "<</PageSize[226 298]>>setpagedevice"
-*PageRegion X70MMY210MM/80mm x 210mm: "<</PageSize[226 595]>>setpagedevice"
-*PageRegion X70MMY297MM/80mm x 297mm: "<</PageSize[226 842]>>setpagedevice"
-*PageRegion X70MMY3276MM/80mm x 3276mm: "<</PageSize[226 9286]>>setpagedevice"
-*PageRegion X72MMY65MM/80mm x 65mm: "<</PageSize[227 182]>>setpagedevice"
-*PageRegion X72MMY105MM/80mm x 105mm: "<</PageSize[227 298]>>setpagedevice"
-*PageRegion X72MMY210MM/80mm x 210mm: "<</PageSize[227 595]>>setpagedevice"
-*PageRegion X72MMY297MM/80mm x 297mm: "<</PageSize[227 842]>>setpagedevice"
-*PageRegion X72MMY3276MM/80mm x 3276mm: "<</PageSize[227 9286]>>setpagedevice"
+*DefaultPageRegion: RP80x200
+*PageRegion RP80x200/Roll paper 80 x 200 mm: "<</PageSize[204.3 566.9]/ImagingBBox null>>setpagedevice"
+*PageRegion RP80x2000/Roll paper 80 x 2000 mm: "<</PageSize[204.3 566.9]/ImagingBBox null>>setpagedevice"
 *CloseUI: *PageRegion
-*DefaultImageableArea: X72MMY65MM
-*ImageableArea X70MMY65MM/80mm x 65mm: "14 0 212 182"
-*ImageableArea X70MMY105MM/80mm x 105mm: "14 0 212 298"
-*ImageableArea X70MMY210MM/80mm x 210mm: "14 0 212 595"
-*ImageableArea X70MMY297MM/80mm x 297mm: "14 0 212 842"
-*ImageableArea X70MMY3276MM/80mm x 3276mm: "14 0 212 9286"
-*ImageableArea X72MMY65MM/80mm x 65mm: "11 0 216 182"
-*ImageableArea X72MMY105MM/80mm x 105mm: "11 0 216 298"
-*ImageableArea X72MMY210MM/80mm x 210mm: "11 0 216 595"
-*ImageableArea X72MMY297MM/80mm x 297mm: "11 0 216 842"
-*ImageableArea X72MMY3276MM/80mm x 3276mm: "11 0 216 9286"
-*DefaultPaperDimension: X72MMY65MM
-*PaperDimension X70MMY65MM/80mm x 65mm: "226 182"
-*PaperDimension X70MMY105MM/80mm x 105mm: "226 298"
-*PaperDimension X70MMY210MM/80mm x 210mm: "226 595"
-*PaperDimension X70MMY297MM/80mm x 297mm: "226 842"
-*PaperDimension X70MMY3276MM/80mm x 3276mm: "226 9286"
-*PaperDimension X72MMY65MM/80mm x 65mm: "227 182"
-*PaperDimension X72MMY105MM/80mm x 105mm: "227 298"
-*PaperDimension X72MMY210MM/80mm x 210mm: "227 595"
-*PaperDimension X72MMY297MM/80mm x 297mm: "227 842"
-*PaperDimension X72MMY3276MM/80mm x 3276mm: "227 9286"
-*MaxMediaWidth: "227"
+*DefaultImageableArea: RP80x200
+*ImageableArea RP80x200/Roll paper 80 x 200 mm: "0 0 204.300003051758 566.900024414062"
+*ImageableArea RP80x2000/Roll paper 80 x 2000 mm: "0 0 204.300003051758 5669.2998046875"
+*DefaultPaperDimension: RP80x200
+*PaperDimension RP80x200/Roll paper 80 x 200 mm: "204.300003051758 566.900024414062"
+*PaperDimension RP80x2000/Roll paper 80 x 2000 mm: "204.300003051758 5669.2998046875"
+*MaxMediaWidth: "204.300003051758"
 *MaxMediaHeight: "9286"
-*HWMargins: 14 0 14 0
+*HWMargins: 0 0 0 0
 *CustomPageSize True: "pop pop pop <</PageSize[5 -2 roll]/ImagingBBox null>>setpagedevice"
-*ParamCustomPageSize Width: 1 points 227 227
+*ParamCustomPageSize Width: 1 points 204.300003051758 204.300003051758
 *ParamCustomPageSize Height: 2 points 56 9286
 *ParamCustomPageSize WidthOffset: 3 points 0 0
 *ParamCustomPageSize HeightOffset: 4 points 0 0
@@ -229,4 +197,4 @@
 *CloseUI: *CashDrawer2PulseOff
 *CloseGroup: *CashDrawerTune
 *DefaultFont: Courier
-*% End of Q803p.ppd, 11543 bytes.
+*% End of Q803p.ppd, 09749 bytes.
