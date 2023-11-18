@@ -152,7 +152,7 @@ Installable "OptionCutter/Cutter"
  *CustomMedia "RP80x200/Roll paper 80 x 200 mm" $POINTS 566.9 0 0 0 0 "<</PageSize[$POINTS 566.9]/ImagingBBox null>>setpagedevice"
   	"<</PageSize[$POINTS 566.9]/ImagingBBox null>>setpagedevice"
   CustomMedia "RP80x2000/Roll paper 80 x 2000 mm" $POINTS 5669.3 0 0 0 0 "<</PageSize[$POINTS 5669.3]/ImagingBBox null>>setpagedevice"
-  	"<</PageSize[$POINTS 566.9]/ImagingBBox null>>setpagedevice"
+  	"<</PageSize[$POINTS 5669.3]/ImagingBBox null>>setpagedevice"
 
   // 803p
   {
