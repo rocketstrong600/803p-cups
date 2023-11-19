@@ -36,26 +36,26 @@
 *OpenUI *PageSize/Media Size: PickOne
 *OrderDependency: 10 AnySetup *PageSize
 *DefaultPageSize: RP80x200
-*PageSize RP80x200/Roll paper 80 x 200 mm: "<</PageSize[204.3 566.9]/ImagingBBox null>>setpagedevice"
-*PageSize RP80x2000/Roll paper 80 x 2000 mm: "<</PageSize[204.3 5669.3]/ImagingBBox null>>setpagedevice"
+*PageSize RP80x200/Roll paper 80 x 200 mm: "<</PageSize[204.1 566.9]>>setpagedevice"
+*PageSize RP80x2000/Roll paper 80 x 2000 mm: "<</PageSize[204.1 5669.3]>>setpagedevice"
 *CloseUI: *PageSize
 *OpenUI *PageRegion/Media Size: PickOne
 *OrderDependency: 10 AnySetup *PageRegion
 *DefaultPageRegion: RP80x200
-*PageRegion RP80x200/Roll paper 80 x 200 mm: "<</PageSize[204.3 566.9]/ImagingBBox null>>setpagedevice"
-*PageRegion RP80x2000/Roll paper 80 x 2000 mm: "<</PageSize[204.3 566.9]/ImagingBBox null>>setpagedevice"
+*PageRegion RP80x200/Roll paper 80 x 200 mm: "<</PageSize[204.1 566.9]>>setpagedevice"
+*PageRegion RP80x2000/Roll paper 80 x 2000 mm: "<</PageSize[204.1 5669.3]>>setpagedevice"
 *CloseUI: *PageRegion
 *DefaultImageableArea: RP80x200
-*ImageableArea RP80x200/Roll paper 80 x 200 mm: "0 0 204.300003051758 566.900024414062"
-*ImageableArea RP80x2000/Roll paper 80 x 2000 mm: "0 0 204.300003051758 5669.2998046875"
+*ImageableArea RP80x200/Roll paper 80 x 200 mm: "0 0 204.100006103516 566.900024414062"
+*ImageableArea RP80x2000/Roll paper 80 x 2000 mm: "0 0 204.100006103516 5669.2998046875"
 *DefaultPaperDimension: RP80x200
-*PaperDimension RP80x200/Roll paper 80 x 200 mm: "204.300003051758 566.900024414062"
-*PaperDimension RP80x2000/Roll paper 80 x 2000 mm: "204.300003051758 5669.2998046875"
-*MaxMediaWidth: "204.300003051758"
+*PaperDimension RP80x200/Roll paper 80 x 200 mm: "204.100006103516 566.900024414062"
+*PaperDimension RP80x2000/Roll paper 80 x 2000 mm: "204.100006103516 5669.2998046875"
+*MaxMediaWidth: "204.100006103516"
 *MaxMediaHeight: "9286"
 *HWMargins: 0 0 0 0
 *CustomPageSize True: "pop pop pop <</PageSize[5 -2 roll]/ImagingBBox null>>setpagedevice"
-*ParamCustomPageSize Width: 1 points 204.300003051758 204.300003051758
+*ParamCustomPageSize Width: 1 points 204.100006103516 204.100006103516
 *ParamCustomPageSize Height: 2 points 56 9286
 *ParamCustomPageSize WidthOffset: 3 points 0 0
 *ParamCustomPageSize HeightOffset: 4 points 0 0
@@ -69,8 +69,8 @@
 *CloseUI: *CutMedia
 *OpenUI *Resolution/Resolution: PickOne
 *OrderDependency: 10 AnySetup *Resolution
-*DefaultResolution: 203x203dpi
-*Resolution 203x203dpi/203 DPI Grayscale: "<</HWResolution[203 203]/cupsColorSpace 3>>setpagedevice"
+*DefaultResolution: 406x406dpi
+*Resolution 406x406dpi/203 DPI Grayscale: "<</HWResolution[406 406]/cupsColorSpace 3/cupsRowCount 24/cupsBitsPerColor 1>>setpagedevice"
 *CloseUI: *Resolution
 *OpenGroup: InstallableOptions/Installable Options
 *OpenUI *OptionCash1/Cash drawer 1: Boolean
@@ -197,4 +197,4 @@
 *CloseUI: *CashDrawer2PulseOff
 *CloseGroup: *CashDrawerTune
 *DefaultFont: Courier
-*% End of Q803p.ppd, 09749 bytes.
+*% End of Q803p.ppd, 09717 bytes.
