@@ -142,7 +142,7 @@ Installable "OptionCutter/Cutter"
 // 80mm hdpi printers
 {
   #define POINTS 204.1
-  #define PIXELS 576
+  #define PIXELS 1152
 
   // model num is used by filter to determine raster width. 58 -> 0x180, 80 -> 0x240.
   ModelNumber $PIXELS
