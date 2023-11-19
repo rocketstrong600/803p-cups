@@ -69,8 +69,8 @@
 *CloseUI: *CutMedia
 *OpenUI *Resolution/Resolution: PickOne
 *OrderDependency: 10 AnySetup *Resolution
-*DefaultResolution: 406x406dpi
-*Resolution 406x406dpi/203 DPI Grayscale: "<</HWResolution[406 406]/cupsColorSpace 3/cupsRowCount 24/cupsBitsPerColor 1>>setpagedevice"
+*DefaultResolution: 203x203dpi
+*Resolution 203x203dpi/203 DPI Grayscale: "<</HWResolution[203 203]/cupsColorSpace 3/cupsRowCount 24/cupsBitsPerColor 1>>setpagedevice"
 *CloseUI: *Resolution
 *OpenGroup: InstallableOptions/Installable Options
 *OpenUI *OptionCash1/Cash drawer 1: Boolean
