@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
 
       for(unsigned int pixel = 0; pixel < header.cupsWidth; pixel++) {
         unsigned char pdata = rasterLine[pixel];
-        if (pdata > 128) {
+        if (pdata < 128) {
           outputLine[pixel/8] |= 1 << (7-pixel%8);
         } else {
           outputLine[pixel/8] |= 0 << (7-pixel%8);
