@@ -1,0 +1,3 @@
+[submodule "libs/libdither"]
+	path = libs/libdither
+	url = https://github.com/robertkist/libdither
