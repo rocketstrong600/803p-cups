@@ -26,7 +26,7 @@ Option "CutMedia/Cut Media" PickOne AnySetup 10
   Choice "EndOfJob/Cut at every job" "<</CutMedia 2>>setpagedevice"
 
 Option "Resolution/Resolution" PickOne AnySetup 10
- *Choice "203x203dpi/203 DPI Grayscale" "<</HWResolution[203 203]/cupsColorSpace 0/cupsRowCount 1/cupsBitsPerColor 8>>setpagedevice"
+ *Choice "203x203dpi/203 DPI Grayscale" "<</HWResolution[203.2 203.2]/cupsColorSpace 0/cupsRowCount 1/cupsBitsPerColor 8>>setpagedevice"
 
 HWMargins 0 0 0 0
 
