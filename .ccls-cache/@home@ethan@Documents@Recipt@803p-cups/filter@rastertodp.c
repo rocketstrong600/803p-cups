@@ -26,15 +26,15 @@ int main(int argc, char *argv[]) {
   
   while (cupsRasterReadHeader2(ras, &header)) {
     page++;
+    initPrinter();
     fprintf(stdout, "PAGE: %i/%i\n", page, header.NumCopies);
     fprintf(stdout, "BPP: %u\n", header.cupsBitsPerPixel);
     fprintf(stdout, "BitsPerColour: %u\n", header.cupsBitsPerColor);
     fprintf(stdout, "Width: %u\n", header.cupsWidth);
     fprintf(stdout, "Height: %u\n", header.cupsHeight);
     
-    rasterLine = malloc(header.cupsBytesPerLine);
+    rasterLine = calloc(header.cupsBytesPerLine, 1);
 
-    initPrinter();
     for (unsigned int y = 0; y < header.cupsHeight; y++) {
       if (cupsRasterReadPixels(ras, rasterLine, header.cupsBytesPerLine) == 0) {
         break;
@@ -43,12 +43,14 @@ int main(int argc, char *argv[]) {
       imageMode(outSize, 1);
 
       unsigned char *outputLine = NULL;
-      outputLine = malloc(outSize);
+      outputLine = calloc(outSize, 1);
 
       for(unsigned int pixel = 0; pixel < header.cupsWidth; pixel++) {
         unsigned char pdata = rasterLine[pixel];
         if (pdata > 128) {
-          outputLine[pixelToByte(pixel+1)-1] |= 1 << (7-pixel%8);
+          outputLine[pixel/8] |= 1 << (7-pixel%8);
+        } else {
+          outputLine[pixel/8] |= 0 << (7-pixel%8);
         }
       }
       fwrite(outputLine, 1, outSize, stdout);
