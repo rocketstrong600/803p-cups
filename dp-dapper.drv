@@ -35,28 +35,23 @@ Group "BlankGroup/Blank Options"
   Option "FeedDist/Feed distance" PickOne AnySetup 10
     Choice "0feed3mm/3mm" "<</AdvanceDistance 24>>setpagedevice"
     Choice "1feed6mm/6mm" "<</AdvanceDistance 48>>setpagedevice"
-   *Choice "2feed9mm/9mm" "<</AdvanceDistance 72>>setpagedevice"
-    Choice "3feed12mm/12mm" "<</AdvanceDistance 96>>setpagedevice"
+    Choice "2feed9mm/9mm" "<</AdvanceDistance 72>>setpagedevice"
+   *Choice "3feed12mm/12mm" "<</AdvanceDistance 96>>setpagedevice"
     Choice "4feed15mm/15mm" "<</AdvanceDistance 120>>setpagedevice"
     Choice "5feed18mm/18mm" "<</AdvanceDistance 144>>setpagedevice"
     Choice "6feed21mm/21mm" "<</AdvanceDistance 168>>setpagedevice"
     Choice "7feed24mm/24mm" "<</AdvanceDistance 192>>setpagedevice"
-    Choice "8feed27mm/27mm" "<</AdvanceDistance 216>>setpagedevice"
-    Choice "9feed30mm/30mm" "<</AdvanceDistance 240>>setpagedevice"
-    Choice "10feed33mm/33mm" "<</AdvanceDistance 264>>setpagedevice"
-    Choice "11feed36mm/36mm" "<</AdvanceDistance 288>>setpagedevice"
-    Choice "12feed39mm/39mm" "<</AdvanceDistance 312>>setpagedevice"
-    Choice "13feed42mm/42mm" "<</AdvanceDistance 336>>setpagedevice"
-    Choice "14feed45mm/45mm" "<</AdvanceDistance 360>>setpagedevice"
-
+	
   Option "FeedWhere/When to feed" PickOne AnySetup 10
     Choice "None/Never" ""
     Choice "AfterPage/After each page" "<</AdvanceMedia 4>>setpagedevice"
    *Choice "AfterJob/After whole printing" "<</AdvanceMedia 2>>setpagedevice"
 
-  Option "BlankSpace/Blank space at page's end" Boolean AnySetup 10
-    Choice "True/Print" "<</cupsInteger6 1>>setpagedevice"
-   *Choice "False/None" "<</cupsInteger6 0>>setpagedevice"
+
+  Option "Dither Method" PickOne AnySetup 10
+    Choice "Threshold" "<</cupsInteger0 0>>setpagedevice"
+   *Choice "Floyd Steinberg" "<</cupsInteger0 1>>setpagedevice"
+
 
 // installable options
 
