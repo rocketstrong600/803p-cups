@@ -63,7 +63,13 @@ Installable "OptionCutter/Cutter"
   MinSize $POINTS 56
   MaxSize $POINTS 9286
 
- *CustomMedia "RP80x200/Roll paper 80 x 200 mm" $POINTS 566.9 0 0 0 0 "<</PageSize[$POINTS 566.9]>>setpagedevice"
+
+
+ *CustomMedia "RP80x80/Roll paper 80 x 80 mm" $POINTS 226.8 0 0 0 0 "<</PageSize[$POINTS 236.8]>>setpagedevice"
+  	"<</PageSize[$POINTS 226.8]>>setpagedevice"
+  CustomMedia "RP80x100/Roll paper 80 x 100 mm" $POINTS 283.5 0 0 0 0 "<</PageSize[$POINTS 283.5]>>setpagedevice"
+  	"<</PageSize[$POINTS 283.5]>>setpagedevice"
+  CustomMedia "RP80x200/Roll paper 80 x 200 mm" $POINTS 566.9 0 0 0 0 "<</PageSize[$POINTS 566.9]>>setpagedevice"
   	"<</PageSize[$POINTS 566.9]>>setpagedevice"
   CustomMedia "RP80x2000/Roll paper 80 x 2000 mm" $POINTS 5669.3 0 0 0 0 "<</PageSize[$POINTS 5669.3]>>setpagedevice"
   	"<</PageSize[$POINTS 5669.3]>>setpagedevice"
