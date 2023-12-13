@@ -25,14 +25,17 @@ void initPrinter() {
   fwrite(buf, 1, sizeof(buf), stdout);
 }
 
-void imageMode(uint16_t xsize, uint16_t ysize) {
+void printImage(uint16_t xsize, uint16_t ysize, unsigned char* raster) {
   char buf[] = {0x1d, 0x76, 0x30, 0, xsize&0xff, xsize>>8, ysize&0xff, ysize>>8};
-  fwrite(buf, 1, sizeof(buf), stdout);
+  fwrite(buf, 1, sizeof(buf), stdout);  
+  fwrite(raster, 1, xsize, stdout);
 }
 
-void feedLines(uint8_t amount) {
-  char buf[] = {0x1b, 0x64, amount};
-  fwrite(buf, 1, sizeof(buf), stdout);
+void feedPixels(int amount) {
+  for (int i; i < amount; i++) {
+    unsigned char blankimage = 0x00;
+    printImage(1,1, &blankimage);
+  }
 }
 
 void cutPaper() {
@@ -70,7 +73,6 @@ int main(int argc, char *argv[]) {
         break;
       }
       uint16_t outSize = pixelToByte(header.cupsWidth);
-      imageMode(outSize, 1);
 
       unsigned char *outputLine = NULL;
       outputLine = calloc(1, outSize);
@@ -83,7 +85,7 @@ int main(int argc, char *argv[]) {
           outputLine[pixel/8] |= 0 << (7-pixel%8);
         }
       }
-      fwrite(outputLine, 1, outSize, stdout);
+      printImage(outSize, 1, outputLine);
       free(outputLine);
       outputLine = NULL;
     }
@@ -93,7 +95,7 @@ int main(int argc, char *argv[]) {
     
     //advance every page
     if (settings.AdvanceMedia == CUPS_ADVANCE_PAGE) {
-      feedLines(settings.AdvanceDistance);
+      feedPixels(settings.AdvanceDistance);
     }
 
     //cut every page
@@ -106,7 +108,7 @@ int main(int argc, char *argv[]) {
 
   //advance every job
   if (settings.AdvanceMedia == CUPS_ADVANCE_JOB) {
-    feedLines(settings.AdvanceDistance);
+    feedPixels(settings.AdvanceDistance);
   }
 
   //cut every job
