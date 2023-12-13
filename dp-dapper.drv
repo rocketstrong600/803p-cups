@@ -24,8 +24,8 @@ Option "Resolution/Resolution" PickOne AnySetup 10
 
 
 Option "DitherMode/Dither Method" PickOne AnySetup 10
-  Choice "Threshold" "<</cupsInteger0 0>>setpagedevice"
- *Choice "Floyd Steinberg" "<</cupsInteger0 1>>setpagedevice"
+  Choice "Threshhold/Threshold" "<</cupsInteger0 0>>setpagedevice"
+ *Choice "FSteinberg/Floyd Steinberg" "<</cupsInteger0 1>>setpagedevice"
 
 HWMargins 0 0 0 0
 
@@ -48,14 +48,9 @@ Group "FeedGroup/Feed/Cut Options"
 
   // cutter
   Option "CutMedia/Cut Media" PickOne AnySetup 10
-   *Choice "None/No cutting" "<</CutMedia 0>>setpagedevice"
+    Choice "None/No cutting" "<</CutMedia 0>>setpagedevice"
     Choice "EndOfPage/Cut at every page" "<</CutMedia 4>>setpagedevice"
-    Choice "EndOfJob/Cut at every job" "<</CutMedia 2>>setpagedevice"
-
-// installable options
-
-Installable "OptionCutter/Cutter"
-    UIConstraints "*CutMedia *OptionCutter False"
+   *Choice "EndOfJob/Cut at every job" "<</CutMedia 2>>setpagedevice"
 
 // 80mm hdpi printers
 {
