@@ -36,7 +36,7 @@ void feedLines(uint8_t amount) {
 }
 
 void cutPaper() {
-  char buf[] = {0x1d, 0x6d};
+  char buf[] = {0x1b, 0x6d};
   fwrite(buf, 1, sizeof(buf), stdout);
 }
 
@@ -57,11 +57,11 @@ int main(int argc, char *argv[]) {
     page++;
     ReadSettings(&header, &settings);
     initPrinter();
-    fprintf(stderr, "PAGE: %i/%i\n", page, header.NumCopies);
-    fprintf(stderr, "BPP: %u\n", header.cupsBitsPerPixel);
-    fprintf(stderr, "BitsPerColour: %u\n", header.cupsBitsPerColor);
-    fprintf(stderr, "Width: %u\n", header.cupsWidth);
-    fprintf(stderr, "Height: %u\n", header.cupsHeight);
+    fprintf(stdout, "PAGE: %i/%i\n", page, header.NumCopies);
+    fprintf(stdout, "BPP: %u\n", header.cupsBitsPerPixel);
+    fprintf(stdout, "BitsPerColour: %u\n", header.cupsBitsPerColor);
+    fprintf(stdout, "Width: %u\n", header.cupsWidth);
+    fprintf(stdout, "Height: %u\n", header.cupsHeight);
     
     rasterLine = malloc(header.cupsBytesPerLine);
 
