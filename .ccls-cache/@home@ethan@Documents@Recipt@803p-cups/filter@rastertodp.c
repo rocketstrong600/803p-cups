@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
     fprintf(stdout, "Width: %u\n", header.cupsWidth);
     fprintf(stdout, "Height: %u\n", header.cupsHeight);
     
-    rasterLine = malloc(header.cupsBytesPerLine);
+    rasterLine = calloc(1, header.cupsBytesPerLine);
 
     for (unsigned int y = 0; y < header.cupsHeight; y++) {
       if (cupsRasterReadPixels(ras, rasterLine, header.cupsBytesPerLine) == 0) {
@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
       imageMode(outSize, 1);
 
       unsigned char *outputLine = NULL;
-      outputLine = malloc(outSize);
+      outputLine = calloc(1, outSize);
 
       for(unsigned int pixel = 0; pixel < header.cupsWidth; pixel++) {
         unsigned char pdata = rasterLine[pixel];
