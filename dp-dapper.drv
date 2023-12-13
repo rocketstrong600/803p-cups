@@ -19,19 +19,18 @@ ColorDevice Yes
 ColorModel Gray/Grayscale w chunky 0
 VariablePaperSize Yes
 
-// cutter
-Option "CutMedia/Cut Media" PickOne AnySetup 10
- *Choice "None/No cutting" "<</CutMedia 0>>setpagedevice"
-  Choice "EndOfPage/Cut at every page" "<</CutMedia 4>>setpagedevice"
-  Choice "EndOfJob/Cut at every job" "<</CutMedia 2>>setpagedevice"
-
 Option "Resolution/Resolution" PickOne AnySetup 10
  *Choice "203x203dpi/203 DPI Grayscale" "<</HWResolution[203.2 203.2]/cupsColorSpace 0/cupsRowCount 1/cupsBitsPerColor 8>>setpagedevice"
+
+
+Option "DitherMode/Dither Method" PickOne AnySetup 10
+  Choice "Threshold" "<</cupsInteger0 0>>setpagedevice"
+ *Choice "Floyd Steinberg" "<</cupsInteger0 1>>setpagedevice"
 
 HWMargins 0 0 0 0
 
 // feeding, spacing
-Group "BlankGroup/Blank Options"
+Group "FeedGroup/Feed/Cut Options"
   Option "FeedDist/Feed distance" PickOne AnySetup 10
     Choice "0feed3mm/3mm" "<</AdvanceDistance 24>>setpagedevice"
     Choice "1feed6mm/6mm" "<</AdvanceDistance 48>>setpagedevice"
@@ -47,11 +46,11 @@ Group "BlankGroup/Blank Options"
     Choice "AfterPage/After each page" "<</AdvanceMedia 4>>setpagedevice"
    *Choice "AfterJob/After whole printing" "<</AdvanceMedia 2>>setpagedevice"
 
-
-  Option "Dither Method" PickOne AnySetup 10
-    Choice "Threshold" "<</cupsInteger0 0>>setpagedevice"
-   *Choice "Floyd Steinberg" "<</cupsInteger0 1>>setpagedevice"
-
+  // cutter
+  Option "CutMedia/Cut Media" PickOne AnySetup 10
+   *Choice "None/No cutting" "<</CutMedia 0>>setpagedevice"
+    Choice "EndOfPage/Cut at every page" "<</CutMedia 4>>setpagedevice"
+    Choice "EndOfJob/Cut at every job" "<</CutMedia 2>>setpagedevice"
 
 // installable options
 

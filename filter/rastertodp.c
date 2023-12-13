@@ -36,7 +36,7 @@ void feedLines(uint8_t amount) {
 }
 
 void cutPaper() {
-  char buf[] = {0x1d, 0x6d};
+  char buf[] = {0x1b, 0x6d};
   fwrite(buf, 1, sizeof(buf), stdout);
 }
 
