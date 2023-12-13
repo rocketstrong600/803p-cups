@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
 
   //advance every job
   if (settings.AdvanceMedia == CUPS_ADVANCE_JOB) {
-    feedLines(settings.AdvanceDistance)
+    feedLines(settings.AdvanceDistance);
   }
 
   //cut every job
