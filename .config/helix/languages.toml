@@ -1,6 +1,0 @@
-[language-server]
-ccls = { command = "ccls" }
-
-[[language]]
-name = "c"
-language-servers = [ "ccls" ]

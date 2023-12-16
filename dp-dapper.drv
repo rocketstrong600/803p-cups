@@ -1,33 +1,54 @@
-// CUPS PPD Compiler CUPS v2.1.3
-// (Don't edit .ppd directly, edit this file instead, then use 
 //	ppdc dp-dapper.drv to generate Q803p.ppd)
+#include <font.defs>
 
-// common for all thermal printers
-Version "1.3"
 DriverType custom
 ManualCopies Yes
 Throughput 1
-Attribute "PSVersion" "" "(3010.000) 550"
 Attribute "LanguageLevel" "" "3"
 Attribute "DefaultColorSpace" "" "Gray"
 Attribute "FileSystem" "" "False"
-Attribute "LandscapeOrientation" "" "Plus90"
 Attribute "TTRasterizer" "" "Type42"
-Attribute "VariablePaperSize" "" "True"
-Filter "application/vnd.cups-raster 100 rastertodp"
-ColorDevice Yes
-ColorModel Gray/Grayscale w chunky 0
+Filter "application/vnd.cups-raster 0 rastertodp"
+ColorDevice False
+
+Font *
+
+Manufacturer "DP-Dapper"
+ModelName "DP_Q803P"
+ModelNumber 803
+Version "1"
+
+
 VariablePaperSize Yes
+MinSize 80mm 5mm
+MaxSize 80mm 1000mm
 
-Option "Resolution/Resolution" PickOne AnySetup 10
- *Choice "203x203dpi/203 DPI Grayscale" "<</HWResolution[203.2 203.2]/cupsColorSpace 0/cupsRowCount 1/cupsBitsPerColor 8>>setpagedevice"
+#media "80x80mm" 80mm 80mm
+#media "80x100mm" 80mm 100mm
+#media "80x125mm" 80mm 125mm
+#media "80x150mm" 80mm 150mm
+#media "80x175mm" 80mm 175mm
+#media "80x200mm" 80mm 200mm
+#media "80x225mm" 80mm 225mm
+#media "80x250mm" 80mm 250mm
 
+*ColorModel Gray/Grayscale w chunky 0
+*Resolution - 8 0 0 0 "203dpi/203 DPI"
+
+HWMargins 3.99mm 0 3.99mm 0
+
+*MediaSize "80x80mm" 
+MediaSize "80x100mm"
+MediaSize "80x125mm"
+MediaSize "80x150mm"
+MediaSize "80x175mm"
+MediaSize "80x200mm"
+MediaSize "80x225mm"
+MediaSize "80x250mm"
 
 Option "DitherMode/Dither Method" PickOne AnySetup 10
   Choice "Threshhold/Threshold" "<</cupsInteger0 0>>setpagedevice"
  *Choice "FSteinberg/Floyd Steinberg" "<</cupsInteger0 1>>setpagedevice"
-
-HWMargins 0 0 0 0
 
 // feeding, spacing
 Group "FeedGroup/Feed/Cut Options"
@@ -52,33 +73,4 @@ Group "FeedGroup/Feed/Cut Options"
     Choice "EndOfPage/Cut at every page" "<</CutMedia 4>>setpagedevice"
    *Choice "EndOfJob/Cut at every job" "<</CutMedia 2>>setpagedevice"
 
-// 80mm hdpi printers
-{
-  #define POINTS 204.1
-  MinSize $POINTS 56
-  MaxSize $POINTS 9286
-
-
-
- *CustomMedia "RP80x80/Roll paper 80 x 80 mm" $POINTS 226.8 0 0 0 0 "<</PageSize[$POINTS 236.8]>>setpagedevice"
-  	"<</PageSize[$POINTS 226.8]>>setpagedevice"
-  CustomMedia "RP80x100/Roll paper 80 x 100 mm" $POINTS 283.5 0 0 0 0 "<</PageSize[$POINTS 283.5]>>setpagedevice"
-  	"<</PageSize[$POINTS 283.5]>>setpagedevice"
-  CustomMedia "RP80x200/Roll paper 80 x 200 mm" $POINTS 566.9 0 0 0 0 "<</PageSize[$POINTS 566.9]>>setpagedevice"
-  	"<</PageSize[$POINTS 566.9]>>setpagedevice"
-  CustomMedia "RP80x2000/Roll paper 80 x 2000 mm" $POINTS 5669.3 0 0 0 0 "<</PageSize[$POINTS 5669.3]>>setpagedevice"
-  	"<</PageSize[$POINTS 5669.3]>>setpagedevice"
-
-  // 803p
-  {
-    Manufacturer "DP-Dapper"
-    ModelName "DP_Q803P"
-    PCFileName "Q803p.ppd"
-    Attribute "NickName" "" "Q803P POS"
-    Attribute "ShortNickName" "" "POS"
-    Attribute "Product" "" "(Q803P)"
-    Attribute "1284DeviceID" "" "MFG:Dapper;CMD:Dapper;MDL:Q803P;CLS:PRINTER;"
-  }
-
-}
-
+PCFileName "Q803p.ppd"

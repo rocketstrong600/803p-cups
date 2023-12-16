@@ -3,11 +3,11 @@
 #include <cups/raster.h>
 #include "libdither.h"
 
-// settings struct
+// settings
 
 
 typedef enum DitherMode {
-  THRESHOLD,
+  THRESHOLD = 0,
   FSTEINBERG
 } DitherMode;
 
@@ -19,11 +19,14 @@ typedef struct PrintSettings {
   DitherMode DitherMode;
 } PrintSettings;
 
+
+//image struct
 typedef struct ImageRaster {
-  int width; //Columns in Bytes
-  int height; //Rows in Bytes
+  unsigned int width; //Columns in Pixels
+  unsigned int height; //Rows in Pixels
   unsigned char *data; //Data Ptr
-  int bpp; //Bits Per Pixel
+  unsigned int bpp; //Bits Per Pixel
+  unsigned int size; //Image Size in bytes
 } ImageRaster;
 
 void ReadSettings(cups_page_header2_t *header, PrintSettings *settings) {
@@ -38,30 +41,44 @@ void initPrinter() {
   fwrite(buf, 1, sizeof(buf), stdout);
 }
 
+//1bpp width to bytes
+unsigned int widthToBytes(unsigned int width) {
+  width = width + 7;
+  width = width/8;
+  return width;
+}
+
 //Print 1bpp image Raster
-void printImage(ImageRaster *imageRaster) {
-  if (imageRaster->bpp != 1) {
+void printImage(ImageRaster imageRaster) {
+  if (imageRaster.bpp != 1) {
     return;
   }
-  if (imageRaster->data == NULL) {
+
+  if (imageRaster.data == NULL) {
     return;
   }
-  uint16_t xsize = imageRaster->width;
-  uint16_t ysize = imageRaster->height;
-  char buf[] = {0x1d, 0x76, 0x30, 0, xsize&0xff, xsize>>8, ysize&0xff, ysize>>8};
-  fwrite(buf, 1, sizeof(buf), stdout);  
-  fwrite(&imageRaster->data, 1, imageRaster->width*imageRaster->height, stdout);
+
+  uint16_t xsize = widthToBytes(imageRaster.width);
+  uint16_t ysize = imageRaster.height;
+  
+  char buf[] = {0x1d, 0x76, 0x30, 0, xsize&0xffU, (xsize>>8)&0xffu, ysize&0xffU, (ysize>>8)&0xffu};
+  fwrite(buf, 1, sizeof(buf), stdout);
+  fwrite(imageRaster.data, 1, imageRaster.size, stdout);
 }
 
 void feedPixels(int amount) {
-  for (int i; i < amount; i++) {
-    ImageRaster blankImage;
-    blankImage.width = 1;
-    blankImage.height = 1;
-    blankImage.bpp = 1;
-    blankImage.data = &(unsigned char){0x00};
-    printImage(&blankImage);
+  ImageRaster blankImage;
+  blankImage.width = 1;
+  blankImage.height = amount;
+  blankImage.bpp = 1;
+  blankImage.size = blankImage.width*blankImage.height;
+  blankImage.data = malloc(blankImage.size);
+  if (blankImage.data == NULL) {
+    return;
   }
+  memset(blankImage.data, 0, amount);
+  printImage(blankImage);
+  free(blankImage.data);
 }
 
 void cutPaper() {
@@ -69,33 +86,79 @@ void cutPaper() {
   fwrite(buf, 1, sizeof(buf), stdout);
 }
 
-//HelperFunction to get num of bytes given pixels for a 1bit per pixel raster
-uint16_t pixelToByte(uint16_t position) {;
-  position = (position+7) & 0xFFFFFFF8;
-  position = position >> 3;
-  return position;
-}
 
 //Converts ImageRaster to 1BPP With Thresholding Algorithym don't forget to free Data After Use
-void thresholdImage(ImageRaster *imageRaster, ImageRaster *outImageRaster, unsigned char threshold) {
-  outImageRaster->height = imageRaster->height;
-  outImageRaster->width = pixelToByte(imageRaster->width);
+void thresholdImage(ImageRaster imageRaster, ImageRaster *outImageRaster, unsigned char threshold) {
+  outImageRaster->height = imageRaster.height;
+  outImageRaster->width = imageRaster.width;
   outImageRaster->bpp = 1;
-  outImageRaster->data = calloc(1,outImageRaster->height*outImageRaster->width);
+  outImageRaster->size= outImageRaster->height*widthToBytes(outImageRaster->width);
+  outImageRaster->data = malloc(outImageRaster->size);
 
   if (outImageRaster->data == NULL) {
     return;
   }
 
-  if (imageRaster->data == NULL) {
+  if (imageRaster.data == NULL) {
     return;
   }
 
-  for(unsigned int pixel = 0; pixel < imageRaster->height*imageRaster->width; pixel++) {
-      int byteIndex = pixel >> 3;
-      int bitIndex = 7-(pixel & 0x07);
-      outImageRaster->data[byteIndex] |= (imageRaster->data[pixel] < threshold) << bitIndex;
+  memset(outImageRaster->data, 0, outImageRaster->size);
+
+  for (unsigned int pixel = 0; pixel < imageRaster.size; pixel++) {
+      unsigned int byteIndex = pixel/8;
+      unsigned char bitIndex = 7 - (pixel % 8);
+      outImageRaster->data[byteIndex] |= (imageRaster.data[pixel] < threshold) << bitIndex;
   }
+}
+
+//Converts ImageRaster to 1BPP With Thresholding Algorithym don't forget to free Data After Use
+void fSteinbergImage(ImageRaster imageRaster, ImageRaster *outImageRaster) {
+  outImageRaster->height = imageRaster.height;
+  outImageRaster->width = imageRaster.width;
+  outImageRaster->bpp = 1;
+  outImageRaster->size= outImageRaster->height*widthToBytes(outImageRaster->width);
+  outImageRaster->data = malloc(outImageRaster->size);
+
+  if (outImageRaster->data == NULL) {
+    return;
+  }
+
+  if (imageRaster.data == NULL) {
+    return;
+  }
+
+  DitherImage* dither_image = DitherImage_new(imageRaster.width, imageRaster.height);
+
+  for (int y=0; y < imageRaster.height; y++) {
+    for (int x=0; x < imageRaster.width; x++) {
+      unsigned char pixel = imageRaster.data[x*y];
+      DitherImage_set_pixel(dither_image, x, y, pixel, pixel, pixel, false);
+    }
+  }
+
+  ErrorDiffusionMatrix* em = get_floyd_steinberg_matrix();
+  uint8_t *out_image = (uint8_t*)calloc(dither_image->width * dither_image->height, sizeof(uint8_t));
+
+  if (out_image == NULL) {
+    return;
+  }
+  
+  error_diffusion_dither(dither_image, em, false, 0.0, out_image);
+
+  memset(outImageRaster->data, 0, outImageRaster->size);
+
+  for(int y = 0; y < dither_image->height; y++) {    
+    for (int x = 0; x < dither_image->width; x++) {
+      unsigned int pixelIndex = y * dither_image->width + x;
+      unsigned int byteIndex = pixelIndex/8;
+      unsigned char bitIndex = 7 - (pixelIndex % 8);
+      outImageRaster->data[byteIndex] |= (out_image[pixelIndex] != 0) << bitIndex;
+    } 
+  }
+  free(out_image);
+  ErrorDiffusionMatrix_free(em);
+  DitherImage_free(dither_image);
 }
 
 
@@ -109,44 +172,63 @@ int main(int argc, char *argv[]) {
     ReadSettings(&header, &settings);
     initPrinter();
     fprintf(stderr, "PAGE: %i/%i\n", page, header.NumCopies);
+    fprintf(stderr, "BytesPerLine: %u\n", header.cupsBytesPerLine);
     fprintf(stderr, "BPP: %u\n", header.cupsBitsPerPixel);
     fprintf(stderr, "BitsPerColour: %u\n", header.cupsBitsPerColor);
     fprintf(stderr, "Width: %u\n", header.cupsWidth);
     fprintf(stderr, "Height: %u\n", header.cupsHeight);
 
-    unsigned char *rasterLine = NULL;
-    rasterLine = calloc(1, header.cupsBytesPerLine);
-
     ImageRaster rasterImage;
     rasterImage.width = header.cupsWidth;
     rasterImage.height = header.cupsHeight;
-    rasterImage.bpp = header.cupsBitsPerColor;
-    rasterImage.data = calloc(1,rasterImage.width*rasterImage.height);
+    rasterImage.bpp = header.cupsBitsPerPixel;
+    rasterImage.size = rasterImage.width*rasterImage.height;
+    rasterImage.data = malloc(rasterImage.size);
+
+    unsigned char *rasterLine = malloc(header.cupsBytesPerLine);
+
+    if (rasterLine == NULL) {
+      return 1;
+    }
     
+    memset(rasterLine, 0, header.cupsBytesPerLine);
+
+    if (rasterImage.data == NULL) {
+      return 1;
+    }
+    
+    memset(rasterImage.data, 0, rasterImage.size);
+
+    //read lines into rasterImage data
     for (unsigned int y = 0; y < header.cupsHeight; y++) {
-      if (cupsRasterReadPixels(ras, rasterLine, header.cupsBytesPerLine) == 0) {
+      if (cupsRasterReadPixels(ras, rasterLine, header.cupsBytesPerLine) == 0) { 
         break;
       }
-      //Copy 1 line of the image into the raster image at current height
-      memcpy(&rasterImage.data[y*(rasterImage.width)], &rasterLine, rasterImage.width);
+      unsigned char *imageLine = rasterImage.data+(y*rasterImage.width);
+      memcpy(imageLine, rasterLine, header.cupsBytesPerLine);
     }
+
+    free(rasterLine);
 
     if (settings.DitherMode == THRESHOLD) {
       ImageRaster outputImage;
-      thresholdImage(&rasterImage, &outputImage, 127);
-      printImage(&outputImage);
+      thresholdImage(rasterImage, &outputImage, 127);
+      printImage(outputImage);
       if (outputImage.data != NULL) {
         free(outputImage.data);
       }
     }
 
-    if (rasterLine != NULL) {
-      free(rasterLine);
+    if (settings.DitherMode == FSTEINBERG) {
+      ImageRaster outputImage;
+      fSteinbergImage(rasterImage, &outputImage);
+      printImage(outputImage);
+      if (outputImage.data != NULL) {
+        free(outputImage.data);
+      }
     }
 
-    if (rasterImage.data != NULL) {
-      free(rasterImage.data)
-    }
+    free(rasterImage.data);
     
     //advance every page
     if (settings.AdvanceMedia == CUPS_ADVANCE_PAGE) {
