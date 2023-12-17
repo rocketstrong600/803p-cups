@@ -133,7 +133,7 @@ void fSteinbergImage(ImageRaster imageRaster, ImageRaster *outImageRaster) {
   for (int y=0; y < imageRaster.height; y++) {
     for (int x=0; x < imageRaster.width; x++) {
       unsigned char pixel = imageRaster.data[x*y];
-      DitherImage_set_pixel(dither_image, x, y, pixel, pixel, pixel, false);
+      DitherImage_set_pixel(dither_image, x, y, pixel, pixel, pixel, true);
     }
   }
 
