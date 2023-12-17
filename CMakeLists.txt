@@ -39,7 +39,8 @@ add_executable ( rastertodp filter/rastertodp.c
 	libs/libdither/src/libdither/queue.c
 	libs/libdither/src/libdither/random.c
 )
-target_compile_options ( rastertodp PRIVATE -Wall -fPIC )
+
+target_compile_options ( rastertodp PRIVATE -std=c99 -Wall -Wextra -Wconversion -Wshadow -Wundef -fPIC )
 target_include_directories ( rastertodp PRIVATE ${CUPS_INCLUDE_DIR} libs/libdither/src/libdither)
 target_link_libraries ( rastertodp PRIVATE ${CUPS_LIBRARIES} ${CUPSIMAGELIB} m )
 
