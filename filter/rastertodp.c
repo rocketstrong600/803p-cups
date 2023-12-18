@@ -24,7 +24,7 @@ typedef struct PrintSettings {
 typedef struct ImageRaster {
   unsigned int width; //Columns in Pixels
   unsigned int height; //Rows in Pixels
-  unsigned char *data; //Data Ptr
+  uint8_t *data; //Data Ptr
   unsigned int bpp; //Bits Per Pixel
   unsigned int size; //Image Size in bytes
 } ImageRaster;
@@ -37,7 +37,7 @@ void ReadSettings(cups_page_header2_t *header, PrintSettings *settings) {
 }
 
 void initPrinter() {
-  char buf[] = {0x1b, 0x40};
+  uint8_t buf[] = {0x1b, 0x40};
   fwrite(buf, 1, sizeof(buf), stdout);
 }
 
@@ -61,7 +61,7 @@ void printImage(ImageRaster imageRaster) {
   uint16_t xsize = widthToBytes(imageRaster.width);
   uint16_t ysize = imageRaster.height;
   
-  char buf[] = {0x1d, 0x76, 0x30, 0, xsize&0xffU, (xsize>>8)&0xffu, ysize&0xffU, (ysize>>8)&0xffu};
+  uint8_t buf[] = {0x1d, 0x76, 0x30, 0, xsize&0xffU, (xsize>>8)&0xffu, ysize&0xffU, (ysize>>8)&0xffu};
   fwrite(buf, 1, sizeof(buf), stdout);
   fwrite(imageRaster.data, 1, imageRaster.size, stdout);
 }
@@ -82,7 +82,7 @@ void feedPixels(int amount) {
 }
 
 void cutPaper() {
-  char buf[] = {0x1b, 0x6d};
+  uint8_t buf[] = {0x1b, 0x6d};
   fwrite(buf, 1, sizeof(buf), stdout);
 }
 
@@ -93,7 +93,7 @@ void thresholdImage(ImageRaster imageRaster, ImageRaster *outImageRaster, unsign
   outImageRaster->width = imageRaster.width;
   outImageRaster->bpp = 1;
   outImageRaster->size= outImageRaster->height*widthToBytes(outImageRaster->width);
-  outImageRaster->data = (unsigned char*)malloc(outImageRaster->size);
+  outImageRaster->data = (uint8_t*)malloc(outImageRaster->size);
 
   if (outImageRaster->data == NULL) {
     return;
@@ -107,7 +107,7 @@ void thresholdImage(ImageRaster imageRaster, ImageRaster *outImageRaster, unsign
 
   for (unsigned int pixel = 0; pixel < imageRaster.size; pixel++) {
       unsigned int byteIndex = pixel/8;
-      unsigned char bitIndex = 7 - (pixel % 8);
+      uint8_t bitIndex = 7 - (pixel % 8);
       outImageRaster->data[byteIndex] |= (imageRaster.data[pixel] < threshold) << bitIndex;
   }
 }
@@ -118,7 +118,7 @@ void fSteinbergImage(ImageRaster imageRaster, ImageRaster *outImageRaster) {
   outImageRaster->width = imageRaster.width;
   outImageRaster->bpp = 1;
   outImageRaster->size= outImageRaster->height*widthToBytes(outImageRaster->width);
-  outImageRaster->data = (unsigned char*)malloc(outImageRaster->size);
+  outImageRaster->data = (uint8_t*)malloc(outImageRaster->size);
 
   if (outImageRaster->data == NULL) {
     return;
@@ -134,7 +134,7 @@ void fSteinbergImage(ImageRaster imageRaster, ImageRaster *outImageRaster) {
 
   for (int y=0; y < imageRaster.height; y++) {
     for (int x=0; x < imageRaster.width; x++) {
-      unsigned char pixel = imageRaster.data[x*y];
+      uint8_t pixel = imageRaster.data[x*y];
       DitherImage_set_pixel(dither_image, x, y, pixel, pixel, pixel, true);
     }
   }
@@ -150,7 +150,7 @@ void fSteinbergImage(ImageRaster imageRaster, ImageRaster *outImageRaster) {
 
   for(int pixel = 0; pixel < imageRaster.size; pixel++) {    
     unsigned int byteIndex = pixel/8;
-    unsigned char bitIndex = 7 - (pixel % 8);
+    uint8_t bitIndex = 7 - (pixel % 8);
     outImageRaster->data[byteIndex] |= (out_image[pixel] & 0x01) << bitIndex;
   }
 
@@ -181,9 +181,9 @@ int main(int argc, char *argv[]) {
     rasterImage.height = header.cupsHeight;
     rasterImage.bpp = header.cupsBitsPerPixel;
     rasterImage.size = rasterImage.width*rasterImage.height;
-    rasterImage.data = malloc(rasterImage.size);
+    rasterImage.data = (uint8_t*)malloc(rasterImage.size);
 
-    unsigned char *rasterLine = (uint8_t*)malloc(header.cupsBytesPerLine);
+    uint8_t *rasterLine = (uint8_t*)malloc(header.cupsBytesPerLine);
 
     if (rasterLine == NULL) {
       return 1;
