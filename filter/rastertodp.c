@@ -148,13 +148,10 @@ void fSteinbergImage(ImageRaster imageRaster, ImageRaster *outImageRaster) {
 
   memset(outImageRaster->data, 0, outImageRaster->size);
 
-  for(int y = 0; y < dither_image->height; y++) {    
-    for (int x = 0; x < dither_image->width; x++) {
-      unsigned int pixelIndex = y * dither_image->width + x;
-      unsigned int byteIndex = pixelIndex/8;
-      unsigned char bitIndex = 7 - (pixelIndex % 8);
-      outImageRaster->data[byteIndex] |= (out_image[pixelIndex] != 0) << bitIndex;
-    } 
+  for(int pixel = 0; pixel < outImageRaster->size; pixel++) {    
+    unsigned int byteIndex = pixel/8;
+    unsigned char bitIndex = 7 - (pixel % 8);
+    outImageRaster->data[byteIndex] |= (out_image[pixel] & 0x01) << bitIndex;
   }
   free(out_image);
   ErrorDiffusionMatrix_free(em);
