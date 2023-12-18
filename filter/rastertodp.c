@@ -93,7 +93,7 @@ void thresholdImage(ImageRaster imageRaster, ImageRaster *outImageRaster, unsign
   outImageRaster->width = imageRaster.width;
   outImageRaster->bpp = 1;
   outImageRaster->size= outImageRaster->height*widthToBytes(outImageRaster->width);
-  outImageRaster->data = malloc(outImageRaster->size);
+  outImageRaster->data = (unsigned char*)malloc(outImageRaster->size);
 
   if (outImageRaster->data == NULL) {
     return;
@@ -118,7 +118,7 @@ void fSteinbergImage(ImageRaster imageRaster, ImageRaster *outImageRaster) {
   outImageRaster->width = imageRaster.width;
   outImageRaster->bpp = 1;
   outImageRaster->size= outImageRaster->height*widthToBytes(outImageRaster->width);
-  outImageRaster->data = malloc(outImageRaster->size);
+  outImageRaster->data = (unsigned char*)malloc(outImageRaster->size);
 
   if (outImageRaster->data == NULL) {
     return;
@@ -127,6 +127,8 @@ void fSteinbergImage(ImageRaster imageRaster, ImageRaster *outImageRaster) {
   if (imageRaster.data == NULL) {
     return;
   }
+
+  memset(outImageRaster->data, 0, outImageRaster->size);
 
   DitherImage* dither_image = DitherImage_new(imageRaster.width, imageRaster.height);
 
@@ -146,13 +148,12 @@ void fSteinbergImage(ImageRaster imageRaster, ImageRaster *outImageRaster) {
   
   error_diffusion_dither(dither_image, em, false, 0.0, out_image);
 
-  memset(outImageRaster->data, 0, outImageRaster->size);
-
-  for(int pixel = 0; pixel < outImageRaster->size; pixel++) {    
+  for(int pixel = 0; pixel < imageRaster.size; pixel++) {    
     unsigned int byteIndex = pixel/8;
     unsigned char bitIndex = 7 - (pixel % 8);
     outImageRaster->data[byteIndex] |= (out_image[pixel] & 0x01) << bitIndex;
   }
+
   free(out_image);
   ErrorDiffusionMatrix_free(em);
   DitherImage_free(dither_image);
@@ -182,7 +183,7 @@ int main(int argc, char *argv[]) {
     rasterImage.size = rasterImage.width*rasterImage.height;
     rasterImage.data = malloc(rasterImage.size);
 
-    unsigned char *rasterLine = malloc(header.cupsBytesPerLine);
+    unsigned char *rasterLine = (uint8_t*)malloc(header.cupsBytesPerLine);
 
     if (rasterLine == NULL) {
       return 1;
