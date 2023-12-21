@@ -50,8 +50,8 @@ Option "DitherMode/Dither Method" PickOne AnySetup 10
   Choice "Threshhold/Threshold" "<</cupsInteger0 0>>setpagedevice"
   *Choice "FSteinberg/Floyd Steinberg" "<</cupsInteger0 1>>setpagedevice"
 
-Group "Threshold/Threshold Options"
-  Option "Threshold/Black Threshold" PickOne AnySetup 10
+Group "ThresholdOpt/Threshold Options"
+  Option "ThresholdP/Black Threshold" PickOne AnySetup 10
     Choice "0PT/0%" "<</cupsInteger3 0>>setpagedevice"
     Choice "1PT/1%" "<</cupsInteger3 1>>setpagedevice"
     Choice "2PT/2%" "<</cupsInteger3 2>>setpagedevice"
@@ -157,7 +157,7 @@ Group "Threshold/Threshold Options"
 Group "DitherOPT/Dither Options"
   Option "DIGammaCorr/Gamma Correction" Boolean AnySetup 10
     Choice True/Yes "<</cupsInteger1 1>>setpagedevice"
-    Choice False/No "<</cupsInteger1 0>>setpagedevice"
+    *Choice False/No "<</cupsInteger1 0>>setpagedevice"
   
   Option "DISigma/Dithering Noise" PickOne AnySetup 10
     *Choice "0PS/0%" "<</cupsInteger2 0>>setpagedevice"

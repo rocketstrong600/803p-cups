@@ -1,3 +1,4 @@
+#include <math.h>
 #include <cups/cups.h>
 #include <cups/ppd.h>
 #include <cups/raster.h>
@@ -19,7 +20,7 @@ typedef struct PrintSettings {
   DitherMode DitherMode;
   cups_bool_t DIGammaCorr;
   unsigned int DISigma;
-  unsigned int Threshhold;
+  unsigned int Threshold;
 } PrintSettings;
 
 
@@ -39,7 +40,7 @@ void ReadSettings(cups_page_header2_t *header, PrintSettings *settings) {
   settings->DitherMode = header->cupsInteger[0];
   settings->DIGammaCorr = header->cupsInteger[1];
   settings->DISigma = header->cupsInteger[2];
-  settings->Threshhold = header->cupsInteger[3];
+  settings->Threshold = header->cupsInteger[3];
 }
 
 void initPrinter() {
@@ -94,7 +95,7 @@ void cutPaper() {
 
 
 //Converts ImageRaster to 1BPP With Thresholding Algorithym don't forget to free Data After Use
-void thresholdImage(ImageRaster imageRaster, ImageRaster *outImageRaster, unsigned char threshold) {
+void thresholdImage(ImageRaster imageRaster, ImageRaster *outImageRaster, double threshold) {
   outImageRaster->height = imageRaster.height;
   outImageRaster->width = imageRaster.width;
   outImageRaster->bpp = 1;
@@ -108,13 +109,14 @@ void thresholdImage(ImageRaster imageRaster, ImageRaster *outImageRaster, unsign
   if (imageRaster.data == NULL) {
     return;
   }
-
+  
   memset(outImageRaster->data, 0, outImageRaster->size);
 
+  uint8_t pixelThreshold = (uint8_t) floor(255*threshold);
   for (unsigned int pixel = 0; pixel < imageRaster.size; pixel++) {
       unsigned int byteIndex = pixel/8;
       uint8_t bitIndex = 7 - (pixel % 8);
-      outImageRaster->data[byteIndex] |= (imageRaster.data[pixel] < threshold) << bitIndex;
+      outImageRaster->data[byteIndex] |= (imageRaster.data[pixel] < pixelThreshold) << bitIndex;
   }
 }
 
@@ -217,7 +219,7 @@ int main(int argc, char *argv[]) {
 
     if (settings.DitherMode == THRESHOLD) {
       ImageRaster outputImage;
-      thresholdImage(rasterImage, &outputImage, 0xff*(settings.Threshhold/100));
+      thresholdImage(rasterImage, &outputImage, (double) settings.Threshold/100.0);
       printImage(outputImage);
       if (outputImage.data != NULL) {
         free(outputImage.data);
@@ -226,7 +228,7 @@ int main(int argc, char *argv[]) {
 
     if (settings.DitherMode == FSTEINBERG) {
       ImageRaster outputImage;
-      fSteinbergImage(rasterImage, &outputImage, settings.DIGammaCorr, settings.DISigma/100);
+      fSteinbergImage(rasterImage, &outputImage, settings.DIGammaCorr, (double) settings.DISigma/100.0);
       printImage(outputImage);
       if (outputImage.data != NULL) {
         free(outputImage.data);
