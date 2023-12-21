@@ -135,18 +135,18 @@ void fSteinbergImage(ImageRaster imageRaster, ImageRaster *outImageRaster) {
   for (int y=0; y < imageRaster.height; y++) {
     for (int x=0; x < imageRaster.width; x++) {
       uint8_t pixel = imageRaster.data[y*imageRaster.width+x];
-      DitherImage_set_pixel(dither_image, x, y, pixel, pixel, pixel, true);
+      DitherImage_set_pixel(dither_image, x, y, pixel, pixel, pixel, false);
     }
   }
 
-  ErrorDiffusionMatrix* em = get_floyd_steinberg_matrix();
+  ErrorDiffusionMatrix* error_matrix = get_floyd_steinberg_matrix();
   uint8_t *out_image = (uint8_t*)calloc(dither_image->width * dither_image->height, sizeof(uint8_t));
 
   if (out_image == NULL) {
     return;
   }
   
-  error_diffusion_dither(dither_image, em, false, 0.0, out_image);
+  error_diffusion_dither(dither_image, error_matrix, false, 0.0, out_image);
 
   for(int pixel = 0; pixel < imageRaster.size; pixel++) {    
     unsigned int byteIndex = pixel/8;
@@ -155,7 +155,7 @@ void fSteinbergImage(ImageRaster imageRaster, ImageRaster *outImageRaster) {
   }
 
   free(out_image);
-  ErrorDiffusionMatrix_free(em);
+  ErrorDiffusionMatrix_free(error_matrix);
   DitherImage_free(dither_image);
 }
 
