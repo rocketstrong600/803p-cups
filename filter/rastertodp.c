@@ -17,6 +17,9 @@ typedef struct PrintSettings {
   cups_cut_t CutMedia;
   unsigned int AdvanceDistance;
   DitherMode DitherMode;
+  cups_bool_t DIGammaCorr;
+  unsigned int DISigma;
+  unsigned int Threshhold;
 } PrintSettings;
 
 
@@ -34,6 +37,9 @@ void ReadSettings(cups_page_header2_t *header, PrintSettings *settings) {
   settings->CutMedia = header->CutMedia;
   settings->AdvanceDistance = header->AdvanceDistance;
   settings->DitherMode = header->cupsInteger[0];
+  settings->DIGammaCorr = header->cupsInteger[1];
+  settings->DISigma = header->cupsInteger[2];
+  settings->Threshhold = header->cupsInteger[3];
 }
 
 void initPrinter() {
@@ -113,7 +119,7 @@ void thresholdImage(ImageRaster imageRaster, ImageRaster *outImageRaster, unsign
 }
 
 //Converts ImageRaster to 1BPP With Thresholding Algorithym don't forget to free Data After Use
-void fSteinbergImage(ImageRaster imageRaster, ImageRaster *outImageRaster) {
+void fSteinbergImage(ImageRaster imageRaster, ImageRaster *outImageRaster, cups_bool_t gammaCorr, double sigma) {
   outImageRaster->height = imageRaster.height;
   outImageRaster->width = imageRaster.width;
   outImageRaster->bpp = 1;
@@ -135,8 +141,8 @@ void fSteinbergImage(ImageRaster imageRaster, ImageRaster *outImageRaster) {
   for (int y=0; y < imageRaster.height; y++) {
     for (int x=0; x < imageRaster.width; x++) {
       uint8_t pixel = imageRaster.data[y*imageRaster.width+x];
-      pixel = 255 - pixel;
-      DitherImage_set_pixel(dither_image, x, y, pixel, pixel, pixel, true);
+      //pixel = 255 - pixel;
+      DitherImage_set_pixel(dither_image, x, y, pixel, pixel, pixel, gammaCorr);
     }
   }
 
@@ -147,12 +153,12 @@ void fSteinbergImage(ImageRaster imageRaster, ImageRaster *outImageRaster) {
     return;
   }
   
-  error_diffusion_dither(dither_image, error_matrix, false, 0.0, out_image);
+  error_diffusion_dither(dither_image, error_matrix, false, sigma, out_image);
 
   for(int pixel = 0; pixel < imageRaster.size; pixel++) {    
     unsigned int byteIndex = pixel/8;
     uint8_t bitIndex = 7 - (pixel % 8);
-    outImageRaster->data[byteIndex] |= (out_image[pixel] & 0x01) << bitIndex;
+    outImageRaster->data[byteIndex] |= (out_image[pixel] == 0x00) << bitIndex;
   }
 
   free(out_image);
@@ -211,7 +217,7 @@ int main(int argc, char *argv[]) {
 
     if (settings.DitherMode == THRESHOLD) {
       ImageRaster outputImage;
-      thresholdImage(rasterImage, &outputImage, 127);
+      thresholdImage(rasterImage, &outputImage, 0xff*(settings.Threshhold/100));
       printImage(outputImage);
       if (outputImage.data != NULL) {
         free(outputImage.data);
@@ -220,7 +226,7 @@ int main(int argc, char *argv[]) {
 
     if (settings.DitherMode == FSTEINBERG) {
       ImageRaster outputImage;
-      fSteinbergImage(rasterImage, &outputImage);
+      fSteinbergImage(rasterImage, &outputImage, settings.DIGammaCorr, settings.DISigma/100);
       printImage(outputImage);
       if (outputImage.data != NULL) {
         free(outputImage.data);
